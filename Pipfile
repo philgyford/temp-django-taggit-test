@@ -5,7 +5,7 @@ name = "pypi"
 
 [packages]
 django-taggit = "==2.1.0"
-django = {editable = true, ref = "main", git = "https://github.com/django/django.git"}
+django = "==4.1a1"
 
 [dev-packages]
 
