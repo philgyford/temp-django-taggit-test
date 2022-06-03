@@ -10,7 +10,7 @@ extra_filters = {"item__is_private": False}
 Item.tags.most_common(extra_filters=extra_filters)
 ```
 
-Using Django 4.1a1, this generates an error like that one below. But if we use Django 4.0, there is no error.
+Using Django 4.1a1, this generates an error like the one below. But if we use Django 4.0, there is no error.
 
 
 ```
