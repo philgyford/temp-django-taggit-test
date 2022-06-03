@@ -2,7 +2,7 @@ Testing a possible bug in django-taggit with Django 4.1a1
 
 Either `pipenv install` or `pip -r requirements.txt`.
 
-In `manage.py shell` doing this:
+Then `manage.py test` or, in `manage.py shell` doing this:
 
 ```python
 from myproject.myapp.models import Item
@@ -10,7 +10,7 @@ extra_filters = {"item__is_private": False}
 Item.tags.most_common(extra_filters=extra_filters)
 ```
 
-generates an error like that one below. But if we use Django 4.0, there is no error.
+Using Djang 4.1a1, this generates an error like that one below. But if we use Django 4.0, there is no error.
 
 
 ```
