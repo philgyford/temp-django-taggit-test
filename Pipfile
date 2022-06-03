@@ -1,0 +1,13 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+django-taggit = "==2.1.0"
+django = {editable = true, ref = "main", git = "https://github.com/django/django.git"}
+
+[dev-packages]
+
+[requires]
+python_version = "3.9"
