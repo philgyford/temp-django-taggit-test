@@ -2,6 +2,8 @@ Testing a possible bug in django-taggit with Django 4.1a1
 
 Either `pipenv install` or `pip -r requirements.txt`.
 
+Then `manage.py migrate`.
+
 Then either `manage.py test` or, in `manage.py shell`, do this:
 
 ```python
