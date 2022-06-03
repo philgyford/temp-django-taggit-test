@@ -1,10 +1,9 @@
 from django.db import models
 from taggit.managers import TaggableManager
 from taggit.models import GenericTaggedItemBase, TagBase
+from taggit.managers import _TaggableManager
 
 from .managers import _BookmarkTaggableManager
-
-
 
 class BookmarkTag(TagBase):
     class Meta:
@@ -25,7 +24,7 @@ class Bookmark(models.Model):
     title = models.CharField(blank=False, max_length=255)
     is_private = models.BooleanField(default=False)
 
-    tags = TaggableManager(manager=_BookmarkTaggableManager, through=TaggedBookmark)
+    tags = TaggableManager(through=TaggedBookmark)
 
     def __str__(self):
         return self.title
