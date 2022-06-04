@@ -1,10 +1,14 @@
-Testing a possible bug in django-taggit with Django 4.1a1
+
+## Testing possible bugs in django-taggit with Django 4.1a1
 
 Either `pipenv install` or `pip -r requirements.txt`.
 
 Then `manage.py migrate`.
 
-Then either `manage.py test` or, in `manage.py shell`, do this:
+
+## Issue 1
+
+Do `manage.py test tests.tests.Issue1TestCase` or, in `manage.py shell`, do this:
 
 ```python
 from myproject.myapp.models import Item
@@ -48,4 +52,38 @@ Traceback (most recent call last):
   File "/Users/phil/.local/share/virtualenvs/temp-django-taggit-test-bvQO61Tk/lib/python3.10/site-packages/django/db/models/sql/query.py", line 387, in _get_col
     return target.get_col(alias, field)
 AttributeError: 'ManyToManyRel' object has no attribute 'get_col'
+```
+
+
+## Issue 2
+
+Do `manage.py test tests.tests.Issue2TestCase` or, in `manage.py shell`, do this:
+
+
+```python
+from myproject.myapp.models import Item
+items = Item.objects.filter(tags__slug__in=["red"])
+```
+
+Using Django 4.1a1, this generates an error like the one below. But if we use Django 4.0, there is no error.
+
+
+```
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+  File "/Users/phil/.local/share/virtualenvs/temp-django-taggit-test-bvQO61Tk/lib/python3.10/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/phil/.local/share/virtualenvs/temp-django-taggit-test-bvQO61Tk/lib/python3.10/site-packages/django/db/models/query.py", line 1395, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "/Users/phil/.local/share/virtualenvs/temp-django-taggit-test-bvQO61Tk/lib/python3.10/site-packages/django/db/models/query.py", line 1413, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/Users/phil/.local/share/virtualenvs/temp-django-taggit-test-bvQO61Tk/lib/python3.10/site-packages/django/db/models/query.py", line 1420, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/Users/phil/.local/share/virtualenvs/temp-django-taggit-test-bvQO61Tk/lib/python3.10/site-packages/django/db/models/sql/query.py", line 1532, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "/Users/phil/.local/share/virtualenvs/temp-django-taggit-test-bvQO61Tk/lib/python3.10/site-packages/django/db/models/sql/query.py", line 1562, in _add_q
+    child_clause, needed_inner = self.build_filter(
+  File "/Users/phil/.local/share/virtualenvs/temp-django-taggit-test-bvQO61Tk/lib/python3.10/site-packages/django/db/models/sql/query.py", line 1466, in build_filter
+    raise FieldError(
+django.core.exceptions.FieldError: Related Field got invalid lookup: slug
 ```
